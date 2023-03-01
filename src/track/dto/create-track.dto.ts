@@ -1,5 +1,4 @@
 import { IsNumber, IsString } from "class-validator";
-import { Album } from "src/album/schemas/album.schema";
 
 export class CreateTrackDto {
 
@@ -15,8 +14,8 @@ export class CreateTrackDto {
     @IsString({each: true})
     genre: string[];
 
-    @IsString({each: true})
-    album: Album;
+    @IsString()
+    album: string;
 
     @IsString()
     key: string;
