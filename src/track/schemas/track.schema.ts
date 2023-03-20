@@ -11,7 +11,7 @@ export class Track {
     name: string;
 
     @Prop()
-    duration: string;
+    duration: number;
 
     @Prop()
     file: string;
