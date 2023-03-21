@@ -28,6 +28,10 @@ export class TrackController {
                 console.log(query.artist)
                 return this.trackService.getByArtist(query.artist)
             }
+            if (query.album_id) {
+                console.log(query.album_id)
+                return this.trackService.getByAlbumId(query.album_id)
+            }
 
         } else {
             return this.trackService.getAll();
