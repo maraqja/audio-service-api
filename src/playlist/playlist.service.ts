@@ -13,8 +13,16 @@ export class PlaylistService {
 
     async getAll(): Promise<Playlist[]> {
         return this.playlistModel.find()
-        .populate('tracks')
+        .populate({
+            path: 'tracks',
+            populate: { path: 'album', populate: {
+                path: 'artists'
+            }}
+        })
         .exec();
+
+
+
     }
 
     async getById(id: string): Promise<Playlist> {

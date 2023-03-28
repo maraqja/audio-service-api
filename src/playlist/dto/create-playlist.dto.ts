@@ -1,6 +1,5 @@
 import { IsEnum, IsNumber, IsOptional, IsString } from "class-validator";
-import { Album } from "src/album/schemas/album.schema";
-import { Track } from "src/track/schemas/track.schema";
+
 import { PlaylistSource } from "../schemas/playlist.schema";
 
 export class CreatePlaylistDto {

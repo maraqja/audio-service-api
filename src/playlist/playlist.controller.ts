@@ -32,6 +32,7 @@ export class PlaylistController {
     @UseGuards(JwtAuthGuard)
     @Post('create')
     async create(@Body() createPlaylistDto: CreatePlaylistDto): Promise<Playlist> {
+        console.log(createPlaylistDto)
         return this.playlistService.create(createPlaylistDto);
     }
 

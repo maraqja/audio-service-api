@@ -29,11 +29,11 @@ export class Playlist {
     @Prop()
     source: PlaylistSource; // поле, определяющее источник создания плейлиста
 
-    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Track' })
+    @Prop({ type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Track'}] })
     tracks: Track[];
 
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
-    owner?: User; // необязательное поле, определяющее владельца плейлиста, если source = user
+    owner?: User; // необязательное поле, определяющее владельца плейлиста, если source = user, пользователя, которому следует отобразить плейлист, если source = recommender 
 
 }
 

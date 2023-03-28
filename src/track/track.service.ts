@@ -114,8 +114,8 @@ export class TrackService {
             image: {$first: '$album.image'},
             release_date: {$first: '$album.release_date'},
             genre: {$first: '$album.genre'},
-            artists: {$addToSet: {'artist': '$album.artists._id', 'name': '$album.artists.name', 'description': '$album.artists.description', 'image': '$album.artists.image', 'genre':'$album.artists.genre'}},
-            tracks: {$addToSet: {'id': '$_id', 'name': '$name', 'duration': '$duration', 'file': '$file', 'genre': '$genre', 'artists': '$artists'}},
+            artists: {$addToSet: {'_id': '$album.artists._id', 'name': '$album.artists.name', 'description': '$album.artists.description', 'image': '$album.artists.image', 'genre':'$album.artists.genre'}},
+            tracks: {$addToSet: {'_id': '$_id', 'name': '$name', 'duration': '$duration', 'file': '$file', 'genre': '$genre', 'artists': '$artists'}},
         })
         .exec()
     }
