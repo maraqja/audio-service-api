@@ -10,6 +10,7 @@ import { FilesService } from './files.service';
     serveRoot: '/static'
   })],
   controllers: [FilesController],
-  providers: [FilesService]
+  providers: [FilesService],
+  exports: [FilesService]
 })
 export class FilesModule {}

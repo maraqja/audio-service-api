@@ -52,5 +52,14 @@ export class PlaylistService {
     }
 
 
+    async updateRecPlaylist (userId: string, name: string, updatePlaylistDto: CreatePlaylistDto) { // name - для того чтобы определять CB/CF/Hybrid/Popularity (т.к. source rec - одинаков для них всех)
+        return this.playlistModel.findOneAndUpdate(
+            { owner: userId, name },
+            updatePlaylistDto,
+            { new:true, upsert: true }
+        )
+    }
+
+
 
 }

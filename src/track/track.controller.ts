@@ -67,4 +67,11 @@ export class TrackController {
     }
 
 
+    @Roles(Role.Admin)
+    @UseGuards(JwtAuthGuard, RoleGuard)
+    @Get('aggregaton/save') // Для теста, вызываться не должен нигде, мб в админке только
+    async getFavorites() {
+        return this.trackService.saveAggregation()
+    }
+
 }

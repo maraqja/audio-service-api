@@ -21,4 +21,12 @@ export class FilesService {
     }
 
 
+	async saveJson(filename: string, data: any) {
+		const uploadFolder = `${path}/uploads/json`;
+		await ensureDir(uploadFolder);
+		await writeFile(`${uploadFolder}/${filename}`, JSON.stringify(data) );
+		const res: FileResponse = { url: `/uploads/json/${filename}`};
+		return res;
+	}
+
 }

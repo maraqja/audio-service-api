@@ -2,12 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Interaction, InteractionDocument } from './schemas/interaction.schema';
+import { FilesService } from 'src/files/files.service';
 
 @Injectable()
 export class InteractionsService {
 
 
-    constructor(@InjectModel(Interaction.name) private interactionModel: Model<InteractionDocument>) {}
+    constructor(
+        @InjectModel(Interaction.name) private interactionModel: Model<InteractionDocument>,
+        private readonly fileService: FilesService
+        ) {}
 
     async listenInteraction (userId: string, trackId: string) {
         return this.interactionModel.findOneAndUpdate(
@@ -54,7 +58,10 @@ export class InteractionsService {
                 $project: {trackId: 1, userId: 1, isFavorite: 1, countListens: 1} // выбираем нужны поля
             },
         ])
-        .exec()
+        .exec().then( (data) => {
+            console.log(data)
+            return this.fileService.saveJson('user-interactions.json', data)
+        } )
 
 
 

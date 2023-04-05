@@ -3,12 +3,14 @@ import { InjectModel } from '@nestjs/mongoose';
 import mongoose, { Model } from 'mongoose';
 import { CreateTrackDto } from './dto/create-track.dto';
 import { Track, TrackDocument } from './schemas/track.schema';
+import { FilesService } from 'src/files/files.service';
 
 @Injectable()
 export class TrackService {
 
     constructor(
-        @InjectModel(Track.name) private trackModel: Model<TrackDocument>
+        @InjectModel(Track.name) private trackModel: Model<TrackDocument>,
+        private readonly fileService: FilesService
         ) {}
 
     async getAll(): Promise<Track[]> {
@@ -118,6 +120,42 @@ export class TrackService {
             tracks: {$addToSet: {'_id': '$_id', 'name': '$name', 'duration': '$duration', 'file': '$file', 'genre': '$genre', 'artists': '$artists'}},
         })
         .exec()
+    }
+
+    async saveAggregation() {
+         return this.trackModel.aggregate().lookup({
+            from: 'albums',
+            localField: 'album',
+            foreignField: '_id',
+            as: 'album'
+        }).unwind({
+            path: '$album'
+        })
+        .lookup({
+            from: 'artists',
+            localField: 'album.artists',
+            foreignField: '_id',
+            as: 'album.artists'
+        })
+        .addFields({
+            'albumDescription': '$album.description',
+            'albumDate': '$album.release_date',
+            'trackArtists': '$album.artists'
+        })
+        .project({
+            "_id":1, "name":1, "genre":1, "albumDescription":1, "albumDate": 1, "trackArtists":1
+        })
+        .exec().then((data) => {
+          const newData = data.map((track) => {
+            return {
+                ...track,
+                genre: track.genre.toString(),
+                trackArtists: track.trackArtists = track.trackArtists.map((artist) => artist.name).toString()
+            }
+            
+          })
+            return this.fileService.saveJson('tracks-info.json', newData)
+        })
     }
 
 

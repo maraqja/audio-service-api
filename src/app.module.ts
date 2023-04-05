@@ -11,6 +11,7 @@ import { ConfigModule } from '@nestjs/config';
 import { FilesModule } from './files/files.module';
 import { PlaylistModule } from './playlist/playlist.module';
 import { InteractionsModule } from './interactions/interactions.module';
+import { RecommenderModule } from './recommender/recommender.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { InteractionsModule } from './interactions/interactions.module';
     FilesModule,
     PlaylistModule,
     InteractionsModule,
+    RecommenderModule,
   ],
   controllers: [AppController],
   providers: [AppService],

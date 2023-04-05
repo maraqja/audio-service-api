@@ -7,6 +7,7 @@ import { Playlist, PlaylistSchema } from './schemas/playlist.schema';
 @Module({
   imports: [MongooseModule.forFeature([{ name: Playlist.name, schema: PlaylistSchema }])],
   controllers: [PlaylistController],
-  providers: [PlaylistService]
+  providers: [PlaylistService],
+  exports: [PlaylistService]
 })
 export class PlaylistModule {}
