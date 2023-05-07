@@ -16,7 +16,8 @@ import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://127.0.0.1:27017/audio-service'),
+    // MongooseModule.forRoot('mongodb://127.0.0.1:27017/audio-service'),
+    MongooseModule.forRoot('mongodb://mongo:Uf42Vg5CWDyLDXzD2WoC@containers-us-west-194.railway.app:6059'), // деплой на RailWay
     ArtistModule,
     AlbumModule,
     TrackModule,
