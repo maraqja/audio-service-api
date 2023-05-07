@@ -4,6 +4,7 @@ import mongoose, { Model } from 'mongoose';
 import { CreateTrackDto } from './dto/create-track.dto';
 import { Track, TrackDocument } from './schemas/track.schema';
 import { FilesService } from 'src/files/files.service';
+import { Cron, Interval } from '@nestjs/schedule';
 
 @Injectable()
 export class TrackService {
@@ -121,8 +122,11 @@ export class TrackService {
         })
         .exec()
     }
-
+    
+    // @Cron('45 * * * *') // каждую минуту на 45 секунде
+    @Interval(5000) // каждые 5 сек
     async saveAggregation() {
+        console.log('saving tracks-info.json ...')
          return this.trackModel.aggregate().lookup({
             from: 'albums',
             localField: 'album',
@@ -143,7 +147,7 @@ export class TrackService {
             'trackArtists': '$album.artists'
         })
         .project({
-            "_id":1, "name":1, "genre":1, "albumDescription":1, "albumDate": 1, "trackArtists":1
+            "_id":1, "name":1,"description":1, "genre":1, "albumDescription":1, "albumDate": 1, "trackArtists":1
         })
         .exec().then((data) => {
           const newData = data.map((track) => {

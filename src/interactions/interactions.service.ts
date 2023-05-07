@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Interaction, InteractionDocument } from './schemas/interaction.schema';
 import { FilesService } from 'src/files/files.service';
+import { Cron, Interval } from '@nestjs/schedule';
 
 @Injectable()
 export class InteractionsService {
@@ -23,8 +24,10 @@ export class InteractionsService {
 
 
     // метод для рекомендашки
+    // @Cron('45 * * * *') // каждую минуту на 45 секунде
+    @Interval(5000) // каждые 5 сек
     async agregateFavorites() { // надо бы каэш затипизировать
-
+        console.log('saving user-interactions.json ...')
         // Почему-то при чейнинге в ответе выдавало белую страницу, заюзал обычный способ
         // return this.interactionModel.aggregate().lookup({
         //     from: 'users',
@@ -59,7 +62,7 @@ export class InteractionsService {
             },
         ])
         .exec().then( (data) => {
-            console.log(data)
+            // console.log(data)
             return this.fileService.saveJson('user-interactions.json', data)
         } )
 

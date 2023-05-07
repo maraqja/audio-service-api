@@ -12,6 +12,7 @@ import { FilesModule } from './files/files.module';
 import { PlaylistModule } from './playlist/playlist.module';
 import { InteractionsModule } from './interactions/interactions.module';
 import { RecommenderModule } from './recommender/recommender.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { RecommenderModule } from './recommender/recommender.module';
     PlaylistModule,
     InteractionsModule,
     RecommenderModule,
+    ScheduleModule.forRoot()
   ],
   controllers: [AppController],
   providers: [AppService],

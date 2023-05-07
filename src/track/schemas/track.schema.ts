@@ -9,6 +9,9 @@ export class Track {
     
     @Prop()
     name: string;
+    
+    @Prop()
+    description: string;
 
     @Prop()
     duration: number;

@@ -6,6 +6,9 @@ export class CreateTrackDto {
     name: string;
 
     @IsString()
+    description: string;
+
+    @IsString()
     duration: string;
 
     @IsString()
